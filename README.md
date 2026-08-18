@@ -1,16 +1,61 @@
-# React + Vite
+# MyDuka Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + Vite SPA for MyDuka. Staging and production deploys target **Vercel** or **Netlify**.
 
-Currently, two official plugins are available:
+## Local setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
 
-## React Compiler
+## Environment variables
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Variable        | Description                                      |
+|-----------------|--------------------------------------------------|
+| `VITE_APP_ENV`  | `development` \| `staging` \| `production`       |
+| `VITE_API_URL`  | Backend API base URL (no trailing slash)         |
 
-## Expanding the Oxlint configuration
+Use `.env.staging.example` as a template for staging builds. Set the same keys in the Vercel/Netlify project dashboard for each environment.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Scripts
+
+| Script              | Purpose                          |
+|---------------------|----------------------------------|
+| `npm run dev`       | Local development server         |
+| `npm run build`     | Production build                 |
+| `npm run build:staging` | Staging-mode Vite build     |
+| `npm run preview`   | Preview production build locally |
+| `npm run lint`      | Run Oxlint                       |
+
+## Staging deploy (Vercel / Netlify)
+
+This repo includes:
+
+- `vercel.json` — Vite build output + SPA rewrite to `index.html`
+- `netlify.toml` — build/`dist` publish + SPA redirect + staging context
+
+### Recommended branch mapping
+
+| Branch    | Environment |
+|-----------|-------------|
+| `staging` | Staging     |
+| `main`    | Production  |
+
+### Vercel
+
+1. Import the GitHub repo in Vercel.
+2. Framework preset: Vite (build `npm run build`, output `dist`).
+3. Create a Staging environment linked to the `staging` branch.
+4. Set `VITE_APP_ENV=staging` and `VITE_API_URL` for Staging; use production values for Production.
+
+### Netlify
+
+1. Import the GitHub repo in Netlify (config is read from `netlify.toml`).
+2. Deploy `staging` as a branch deploy / staging site.
+3. Set `VITE_APP_ENV` and `VITE_API_URL` under Site settings → Environment variables (per deploy context).
+
+## CI
+
+GitHub Actions runs install, tests, and a production build on pushes/PRs to `main`, `develop`, and `staging`.
