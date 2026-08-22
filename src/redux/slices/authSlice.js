@@ -1,9 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiPost, getErrorMessage } from '../api/apiSlice'
 
+function storageGet(key) {
+  try {
+    return globalThis.localStorage?.getItem?.(key) ?? null
+  } catch {
+    return null
+  }
+}
+
+function storageSet(key, value) {
+  try {
+    globalThis.localStorage?.setItem?.(key, value)
+  } catch {
+    /* ignore storage errors in non-browser contexts */
+  }
+}
+
+function storageRemove(key) {
+  try {
+    globalThis.localStorage?.removeItem?.(key)
+  } catch {
+    /* ignore storage errors in non-browser contexts */
+  }
+}
+
 function readStoredUser() {
   try {
-    const raw = localStorage.getItem('user')
+    const raw = storageGet('user')
     return raw ? JSON.parse(raw) : null
   } catch {
     return null
@@ -12,7 +36,7 @@ function readStoredUser() {
 
 const initialState = {
   user: readStoredUser(),
-  token: localStorage.getItem('token'),
+  token: storageGet('token'),
   status: 'idle',
   error: null,
 }
@@ -22,8 +46,8 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await apiPost('/auth/login', credentials)
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('user', JSON.stringify(data.user))
+      storageSet('token', data.token)
+      storageSet('user', JSON.stringify(data.user))
       return data
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Login failed'))
@@ -37,8 +61,8 @@ export const acceptInvite = createAsyncThunk(
     try {
       const data = await apiPost('/auth/accept-invite', payload)
       if (data.token && data.user) {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
+        storageSet('token', data.token)
+        storageSet('user', JSON.stringify(data.user))
       }
       return data
     } catch (error) {
@@ -56,8 +80,8 @@ const authSlice = createSlice({
       state.token = null
       state.status = 'idle'
       state.error = null
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      storageRemove('token')
+      storageRemove('user')
     },
     clearAuthError(state) {
       state.error = null

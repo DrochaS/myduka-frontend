@@ -22,8 +22,13 @@ export default function Login() {
   const [errors, setErrors] = useState({})
 
   if (isAuthenticated) {
-    const user = JSON.parse(localStorage.getItem('user') || 'null')
-    return <Navigate to={homeForRole(user?.role)} replace />
+    let role = null
+    try {
+      role = JSON.parse(localStorage.getItem('user') || 'null')?.role
+    } catch {
+      role = null
+    }
+    return <Navigate to={homeForRole(role)} replace />
   }
 
   const onChange = (event) => {
