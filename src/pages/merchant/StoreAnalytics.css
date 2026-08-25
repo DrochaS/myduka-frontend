@@ -1,0 +1,4 @@
+.analytics-page .chart-panel {
+  display: flex;
+  flex-direction: column;
+}
