@@ -25,3 +25,18 @@ export function validateLogin({ email, password }) {
   }
   return errors
 }
+
+export function validateRegister({ name, email, role, password, confirmPassword }) {
+  const errors = {}
+  if (!name || String(name).trim() === '') errors.name = 'Full name is required'
+  if (!isValidEmail(email)) errors.email = 'Enter a valid email'
+  if (!role || String(role).trim() === '') errors.role = 'Role is required'
+  if (!password || password.length < 6) {
+    errors.password = 'Password must be at least 6 characters'
+  }
+  if (password !== confirmPassword) {
+    errors.confirmPassword = 'Passwords do not match'
+  }
+  return errors
+}
+

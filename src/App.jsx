@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import ProtectedRoute, { homeForRole } from './components/guards/ProtectedRoute'
 import PageWrapper from './components/layout/PageWrapper'
 import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
 import AcceptInvite from './pages/auth/AcceptInvite'
 import NotFound from './pages/errors/NotFound'
 import Unauthorized from './pages/errors/Unauthorized'
@@ -27,6 +28,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/signup" element={<Register />} />
         <Route path="/accept-invite" element={<AcceptInvite />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
