@@ -104,29 +104,6 @@ const authSlice = createSlice({
     clearAuthError(state) {
       state.error = null
     },
-    demoLogin(state, action) {
-      const payload = action.payload || {}
-      const role = typeof payload === 'string' ? payload : (payload.role || 'merchant')
-      const full_name = typeof payload === 'object' && payload.full_name ? payload.full_name : (
-        role === 'merchant' ? 'Demo Merchant' :
-        role === 'admin' ? 'Demo Store Admin' : 'Demo Inventory Clerk'
-      )
-      const email = typeof payload === 'object' && payload.email ? payload.email : `${role}@myduka.demo`
-      const user = {
-        id: typeof payload === 'object' && payload.id ? payload.id : 999,
-        email,
-        full_name,
-        role,
-        is_active: true,
-      }
-      const token = 'demo-jwt-token-' + role
-      state.user = user
-      state.token = token
-      state.status = 'succeeded'
-      state.error = null
-      storageSet('token', token)
-      storageSet('user', JSON.stringify(user))
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -175,7 +152,7 @@ const authSlice = createSlice({
   },
 })
 
-export const { logout, clearAuthError, demoLogin } = authSlice.actions
+export const { logout, clearAuthError } = authSlice.actions
 export const selectAuth = (state) => state.auth
 export const selectUser = (state) => state.auth.user
 export const selectIsAuthenticated = (state) => Boolean(state.auth.token)
