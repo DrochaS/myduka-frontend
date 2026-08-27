@@ -9,6 +9,46 @@ export default defineConfig({
   esbuild: {
     jsx: 'automatic',
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (
+              id.includes('chart.js') ||
+              id.includes('react-chartjs-2') ||
+              id.includes('@kurkle/color')
+            ) {
+              return 'vendor-charts'
+            }
+            if (
+              id.includes('@reduxjs/toolkit') ||
+              id.includes('react-redux') ||
+              id.includes('redux')
+            ) {
+              return 'vendor-redux'
+            }
+            if (
+              id.includes('react-router') ||
+              id.includes('@remix-run')
+            ) {
+              return 'vendor-router'
+            }
+            if (
+              id.includes('react') ||
+              id.includes('react-dom') ||
+              id.includes('scheduler')
+            ) {
+              return 'vendor-react'
+            }
+            if (id.includes('axios')) {
+              return 'vendor-axios'
+            }
+          }
+        },
+      },
+    },
+  },
   test: {
     environment: 'jsdom',
     globals: true,
