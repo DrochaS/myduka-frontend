@@ -117,6 +117,7 @@ export default function ClerkDashboard() {
       <RequestSupplyModal
         open={supplyOpen}
         onClose={() => setSupplyOpen(false)}
+        products={products}
       />
       <SpoiltGoodsModal
         open={spoiltOpen}

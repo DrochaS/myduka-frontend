@@ -4,6 +4,14 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react({ jsxRuntime: 'automatic' })],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+      },
+    },
+  },
   // Vitest still transforms via esbuild; keep automatic JSX so components
   // do not need a classic `import React` in every file.
   esbuild: {

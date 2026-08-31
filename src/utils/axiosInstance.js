@@ -18,7 +18,9 @@ function clearSession() {
 }
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  // Use Vite's same-origin development proxy unless a deployment supplies
+  // an explicit API URL.
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -35,7 +37,7 @@ axiosInstance.interceptors.request.use((config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    if ([401, 422].includes(error.response?.status)) {
       clearSession()
       if (
         typeof window !== 'undefined' &&

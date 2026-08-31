@@ -21,7 +21,7 @@ describe('authSlice', () => {
 
   it('stores user and token on login.fulfilled', () => {
     const payload = {
-      token: 'jwt-token',
+      access_token: 'jwt-token',
       user: { id: 1, email: 'clerk@myduka.test', role: 'clerk' },
     }
     const state = authReducer(undefined, {

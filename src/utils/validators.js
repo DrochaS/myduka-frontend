@@ -39,4 +39,3 @@ export function validateRegister({ name, email, role, password, confirmPassword 
   }
   return errors
 }
-

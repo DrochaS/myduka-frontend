@@ -58,7 +58,7 @@ export default function AdminDashboard() {
       ) : (
         <div className="chart-grid">
           <div className="panel chart-panel">
-            <h2 className="panel__title">Weekly activity</h2>
+            <h2 className="panel__title">Stock entries by clerk</h2>
             <LineChart
               labels={trend.labels}
               values={trend.values}
@@ -66,7 +66,7 @@ export default function AdminDashboard() {
             />
           </div>
           <div className="panel chart-panel">
-            <h2 className="panel__title">Clerk comparison</h2>
+            <h2 className="panel__title">Spoilt units by clerk</h2>
             <BarChart
               labels={byClerk.labels}
               values={byClerk.values}

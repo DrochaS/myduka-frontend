@@ -48,7 +48,7 @@ export default function StoreAnalytics() {
       ) : (
         <div className="chart-grid">
           <div className="panel chart-panel">
-            <h2 className="panel__title">Sales by store</h2>
+            <h2 className="panel__title">Supplier payments by store</h2>
             <LineChart
               labels={byStore.labels}
               values={byStore.values}
@@ -56,7 +56,7 @@ export default function StoreAnalytics() {
             />
           </div>
           <div className="panel chart-panel">
-            <h2 className="panel__title">Product movement</h2>
+            <h2 className="panel__title">Stock by product</h2>
             <BarChart
               labels={byProduct.labels}
               values={byProduct.values}

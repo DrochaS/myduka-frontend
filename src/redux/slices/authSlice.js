@@ -46,9 +46,12 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await apiPost('/auth/login', credentials)
-      storageSet('token', data.token)
-      storageSet('user', JSON.stringify(data.user))
-      return data
+      const token = data.access_token || data.token
+      if (token && data.user) {
+        storageSet('token', token)
+        storageSet('user', JSON.stringify(data.user))
+      }
+      return { ...data, token }
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Login failed'))
     }

@@ -1,6 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiGet, apiPost, apiPatch, getErrorMessage } from '../api/apiSlice'
 
+function toStockEntry(entry) {
+  return {
+    ...entry,
+    productName: entry.product_name,
+    quantityReceived: entry.quantity_received,
+    stockQuantity: entry.stock_quantity,
+    spoiltQuantity: entry.spoilt_quantity,
+    buyingPrice: entry.buy_price,
+    sellingPrice: entry.sell_price,
+    paymentStatus: entry.payment_status,
+  }
+}
+
 const initialState = {
   stockEntries: [],
   products: [],
@@ -12,7 +25,8 @@ export const fetchStockEntries = createAsyncThunk(
   'inventory/fetchStockEntries',
   async (_, { rejectWithValue }) => {
     try {
-      return await apiGet('/clerk/stock')
+      const entries = await apiGet('/clerk/stock-entries')
+      return entries.map(toStockEntry)
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Failed to load stock'))
     }
@@ -23,7 +37,7 @@ export const createStockEntry = createAsyncThunk(
   'inventory/createStockEntry',
   async (payload, { rejectWithValue }) => {
     try {
-      return await apiPost('/clerk/stock', payload)
+      return toStockEntry(await apiPost('/clerk/stock-entries', payload))
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Failed to create stock entry'))
     }
@@ -34,7 +48,11 @@ export const reportSpoiltGoods = createAsyncThunk(
   'inventory/reportSpoiltGoods',
   async (payload, { rejectWithValue }) => {
     try {
-      return await apiPost('/clerk/spoilt', payload)
+      return toStockEntry(
+        await apiPatch(`/clerk/stock-entries/${payload.stockEntryId}/spoilt`, {
+          spoilt_quantity: payload.spoiltQuantity,
+        }),
+      )
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Failed to report spoilt goods'))
     }

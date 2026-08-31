@@ -12,7 +12,7 @@ const EMPTY = {
   notes: '',
 }
 
-export default function RequestSupplyModal({ open, onClose }) {
+export default function RequestSupplyModal({ open, onClose, products = [] }) {
   const dispatch = useDispatch()
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
@@ -34,11 +34,17 @@ export default function RequestSupplyModal({ open, onClose }) {
     setErrors(next)
     if (Object.keys(next).length) return
 
+    const product = products.find((item) => item.name === form.productName)
+    if (!product) {
+      setErrors({ productName: 'Choose a product from the list.' })
+      return
+    }
+
     setSubmitting(true)
     const result = await dispatch(
       createSupplyRequest({
-        productName: form.productName,
-        quantity: Number(form.quantity),
+        product_id: product.id,
+        quantity_requested: Number(form.quantity),
         notes: form.notes,
       }),
     )
@@ -67,13 +73,22 @@ export default function RequestSupplyModal({ open, onClose }) {
       }
     >
       <form id="request-supply-form" className="form-grid" onSubmit={onSubmit}>
-        <Input
-          label="Product"
-          name="productName"
-          value={form.productName}
-          onChange={onChange}
-          error={errors.productName}
-        />
+        <label className="field">
+          <span className="field__label">Product</span>
+          <input
+            list="supply-product-options"
+            className="field__input"
+            name="productName"
+            value={form.productName}
+            onChange={onChange}
+          />
+          <datalist id="supply-product-options">
+            {products.map((product) => (
+              <option key={product.id} value={product.name} />
+            ))}
+          </datalist>
+          {errors.productName ? <span className="field__error">{errors.productName}</span> : null}
+        </label>
         <Input
           label="Quantity needed"
           name="quantity"

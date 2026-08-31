@@ -55,7 +55,6 @@ export default function Register() {
 
     const result = await dispatch(
       register({
-        name: form.name,
         full_name: form.name,
         email: form.email,
         role: form.role,

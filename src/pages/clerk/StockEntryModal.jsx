@@ -50,16 +50,22 @@ export default function StockEntryModal({ open, onClose, products = [] }) {
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length) return
 
+    const product = products.find((item) => item.name === form.productName)
+    if (!product) {
+      setErrors({ productName: 'Choose a product from the list.' })
+      return
+    }
+
     setSubmitting(true)
     const result = await dispatch(
       createStockEntry({
-        productName: form.productName,
-        quantityReceived: Number(form.quantityReceived),
-        stockQuantity: Number(form.stockQuantity),
-        spoiltQuantity: Number(form.spoiltQuantity),
-        buyingPrice: Number(form.buyingPrice),
-        sellingPrice: Number(form.sellingPrice),
-        paymentStatus: form.paymentStatus,
+        product_id: product.id,
+        quantity_received: Number(form.quantityReceived),
+        stock_quantity: Number(form.stockQuantity),
+        spoilt_quantity: Number(form.spoiltQuantity),
+        buy_price: Number(form.buyingPrice),
+        sell_price: Number(form.sellingPrice),
+        payment_status: form.paymentStatus,
       }),
     )
     setSubmitting(false)
