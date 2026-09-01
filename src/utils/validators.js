@@ -39,3 +39,7 @@ export function validateRegister({ name, email, role, password, confirmPassword 
   }
   return errors
 }
+
+export function isValidPhone(phone) {
+  return /^\+?[0-9]{7,15}$/.test(String(phone || '').trim())
+}
