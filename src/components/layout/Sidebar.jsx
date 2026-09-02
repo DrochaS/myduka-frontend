@@ -15,8 +15,10 @@ const NAV_BY_ROLE = {
   ],
   merchant: [
     { to: '/merchant', label: 'Overview', icon: 'grid' },
-    { to: '/merchant/admins', label: 'Admins', icon: 'users' },
-    { to: '/merchant/analytics', label: 'Store analytics', icon: 'chart' },
+    { to: '/merchant/analytics', label: 'Analytics', icon: 'chart' },
+    { to: '/merchant/branches', label: 'Branches', icon: 'store' },
+    { to: '/merchant/admins', label: 'Admin management', icon: 'users' },
+    { to: '/merchant/inventory', label: 'Inventory', icon: 'box' },
   ],
 }
 
@@ -32,6 +34,7 @@ function Icon({ name }) {
     chart: 'M4 20V10M10 20V4M16 20v-7M4 20h16',
     box: 'M4 8l8-4 8 4-8 4-8-4zM4 8v9l8 4 8-4V8M12 12v9',
     alert: 'M12 9v4M12 17h.01M10.3 3.9L2.8 17a1.5 1.5 0 0 0 1.3 2.2h15.8a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z',
+    store: 'M4 9l1-5h14l1 5M4 9v10a1 1 0 0 0 1 1h4v-6h6v6h4a1 1 0 0 0 1-1V9M4 9h16',
     logout: 'M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M15 16l4-4-4-4M19 12H9',
     chevron: 'M9 6l6 6-6 6',
   }
