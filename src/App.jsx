@@ -13,6 +13,8 @@ import ClerkManagement from './pages/admin/ClerkManagement'
 import MerchantDashboard from './pages/merchant/MerchantDashboard'
 import AdminManagement from './pages/merchant/AdminManagement'
 import StoreAnalytics from './pages/merchant/StoreAnalytics'
+import StockEntries from './pages/admin/StockEntries'
+import Alerts from './pages/admin/Alerts'
 import { useAuth } from './hooks/useAuth'
 import './App.css'
 
