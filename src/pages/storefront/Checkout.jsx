@@ -298,7 +298,8 @@ export default function Checkout() {
                     </>
                   )}
                 </button>
-              </form>
+              </section>
+            </form>
             </div>
 
             {/* Order Summary Sidebar */}
