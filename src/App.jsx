@@ -42,12 +42,14 @@ export default function App() {
 
             <Route element={<ProtectedRoute roles={['admin']} />}>
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/stock-entries" element={<StockEntries />} />
               <Route path="/admin/supply-requests" element={<SupplyRequests />} />
               <Route
                 path="/admin/supplier-payments"
                 element={<SupplierPayments />}
               />
               <Route path="/admin/clerks" element={<ClerkManagement />} />
+              <Route path="/admin/alerts" element={<Alerts />} />
             </Route>
 
             <Route element={<ProtectedRoute roles={['merchant']} />}>
