@@ -2,7 +2,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { formatCurrency } from '../../utils/formatters'
 import './Checkout.css'
-import './OrderConfirmation.css'
+import './Orderconfirmation.css'
 
 export default function OrderConfirmation() {
   const { id } = useParams()

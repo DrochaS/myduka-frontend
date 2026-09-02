@@ -19,6 +19,9 @@ const ClerkManagement = lazy(() => import('./pages/admin/ClerkManagement'))
 const MerchantDashboard = lazy(() => import('./pages/merchant/MerchantDashboard'))
 const AdminManagement = lazy(() => import('./pages/merchant/AdminManagement'))
 const StoreAnalytics = lazy(() => import('./pages/merchant/StoreAnalytics'))
+const Storefront = lazy(() => import('./pages/storefront/Storefront'))
+const Checkout = lazy(() => import('./pages/storefront/Checkout'))
+const OrderConfirmation = lazy(() => import('./pages/storefront/Orderconfirmation'))
 
 function RoleHome() {
   const { role, isAuthenticated } = useAuth()
@@ -42,6 +45,9 @@ export default function App() {
           <Route path="/signup" element={<Register />} />
           <Route path="/accept-invite" element={<AcceptInvite />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/shop" element={<Storefront />} />
+          <Route path="/shop/checkout" element={<Checkout />} />
+          <Route path="/shop/order/:orderId" element={<OrderConfirmation />} />
 
           <Route element={<ProtectedRoute />}>
             <Route element={<PageWrapper />}>
