@@ -30,6 +30,8 @@
   border-radius: 10px;
   color: var(--text);
   cursor: pointer;
+  background: var(--code-bg);
+  border-color: var(--accent-border);
 }
 
 .notif-bell__badge {
