@@ -1,0 +1,78 @@
+.admin-management-page .page__header h1 {
+  font-size: 1.75rem;
+}
+
+.admin-management-page .panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+.admin-management-page .table-wrap {
+  overflow-x: auto;
+}
+
+.admin-management-page .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-management-page .data-table thead tr {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-management-page .data-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.admin-management-page .data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-management-page .data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-management-page .data-table tbody tr:hover {
+  background: rgba(15, 118, 110, 0.04);
+}
+
+.admin-management-page .table-empty {
+  padding: 1.5rem;
+  color: var(--muted);
+  text-align: center;
+  margin: 0;
+}
+
+.admin-management-page .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.85rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.admin-management-page .pagination button {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.admin-management-page .pagination button:disabled {
+  color: var(--muted);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
