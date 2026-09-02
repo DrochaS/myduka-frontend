@@ -94,6 +94,28 @@
   border-radius: 50%;
 }
 
+.chart-frame {
+  position: relative;
+  width: 100%;
+}
+
+.chart-frame--lg {
+  height: 320px;
+}
+
+.chart-frame--md {
+  height: 280px;
+}
+
+@media (max-width: 640px) {
+  .chart-frame--lg {
+    height: 260px;
+  }
+  .chart-frame--md {
+    height: 220px;
+  }
+}
+
 .merchant-split-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
