@@ -4,6 +4,8 @@ import ProtectedRoute, { homeForRole } from './components/guards/ProtectedRoute'
 import PageWrapper from './components/layout/PageWrapper'
 import Loader from './components/common/Loader'
 import { useAuth } from './hooks/useAuth'
+import Branches from './pages/merchant/Branches'
+import Inventory from './pages/merchant/Inventory'
 import './App.css'
 
 const Login = lazy(() => import('./pages/auth/Login'))
