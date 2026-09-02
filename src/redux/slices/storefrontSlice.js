@@ -1,11 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiGet, apiPost, getErrorMessage } from '../api/apiSlice'
 
-// Flip to false once GET /api/storefront/products and
-// POST /api/storefront/checkout are live on the backend.
-// Shapes here match API_CONTRACTS.md exactly, so flipping this is the
-// only change needed once the real endpoints ship.
-const USE_MOCK = true
+const USE_MOCK = false
 
 const MOCK_PRODUCTS = [
   {
