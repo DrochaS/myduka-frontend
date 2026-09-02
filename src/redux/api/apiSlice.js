@@ -24,6 +24,9 @@ export async function apiDelete(path, config) {
 }
 
 export function getErrorMessage(error, fallback = 'Something went wrong') {
+  if (error?.message === 'Network Error' || error?.code === 'ERR_NETWORK') {
+    return 'Unable to reach the backend API server. Please ensure the backend is running and CORS/VITE_API_URL is properly configured.'
+  }
   return (
     error?.response?.data?.message ||
     error?.response?.data?.error ||

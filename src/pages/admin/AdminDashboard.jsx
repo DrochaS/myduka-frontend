@@ -197,6 +197,20 @@ export default function AdminDashboard() {
           <div className="panel chart-panel">
             <h2 className="panel__title">Clerk comparison</h2>
             <BarChart labels={byClerk.labels} values={byClerk.values} label={byClerk.label || 'Actions'} />
+            <h2 className="panel__title">Stock entries by clerk</h2>
+            <LineChart
+              labels={trend.labels}
+              values={trend.values}
+              label={trend.label || 'Entries'}
+            />
+          </div>
+          <div className="panel chart-panel">
+            <h2 className="panel__title">Spoilt units by clerk</h2>
+            <BarChart
+              labels={byClerk.labels}
+              values={byClerk.values}
+              label={byClerk.label || 'Actions'}
+            />
           </div>
         </div>
       )}

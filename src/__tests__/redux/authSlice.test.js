@@ -4,6 +4,7 @@ import authReducer, {
   clearAuthError,
   login,
   acceptInvite,
+  register,
 } from '../../redux/slices/authSlice'
 
 describe('authSlice', () => {
@@ -20,7 +21,7 @@ describe('authSlice', () => {
 
   it('stores user and token on login.fulfilled', () => {
     const payload = {
-      token: 'jwt-token',
+      access_token: 'jwt-token',
       user: { id: 1, email: 'clerk@myduka.test', role: 'clerk' },
     }
     const state = authReducer(undefined, {
@@ -58,6 +59,29 @@ describe('authSlice', () => {
     expect(localStorage.getItem('token')).toBeNull()
   })
 
+  it('stores user and token on register.fulfilled', () => {
+    const payload = {
+      token: 'register-jwt',
+      user: { id: 3, email: 'merchant@myduka.test', role: 'merchant' },
+    }
+    const state = authReducer(undefined, {
+      type: register.fulfilled.type,
+      payload,
+    })
+    expect(state.token).toBe('register-jwt')
+    expect(state.user.role).toBe('merchant')
+    expect(state.status).toBe('succeeded')
+  })
+
+  it('records register failures', () => {
+    const state = authReducer(
+      { user: null, token: null, status: 'loading', error: null },
+      { type: register.rejected.type, payload: 'Email already exists' },
+    )
+    expect(state.status).toBe('failed')
+    expect(state.error).toBe('Email already exists')
+  })
+
   it('clears auth errors', () => {
     const state = authReducer(
       { user: null, token: null, status: 'failed', error: 'Boom' },
@@ -65,4 +89,5 @@ describe('authSlice', () => {
     )
     expect(state.error).toBeNull()
   })
+
 })

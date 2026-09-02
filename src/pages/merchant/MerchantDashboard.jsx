@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import Button from '../../components/common/Button'
+import './MerchantDashboard.css'
 
 export default function MerchantDashboard() {
   return (
-    <div className="page">
+    <div className="page merchant-page">
       <div className="page__header">
         <div>
           <h1>Merchant overview</h1>
