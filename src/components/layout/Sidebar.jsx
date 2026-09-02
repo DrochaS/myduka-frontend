@@ -4,6 +4,7 @@ import './Sidebar.css'
 const NAV_BY_ROLE = {
   clerk: [
     { to: '/clerk', label: 'Stock desk', icon: 'grid' },
+    { to: '/shop', label: 'Storefront', icon: 'cart' },
   ],
   admin: [
     { to: '/admin', label: 'Overview', icon: 'grid' },
@@ -12,11 +13,13 @@ const NAV_BY_ROLE = {
     { to: '/admin/supplier-payments', label: 'Supplier payments', icon: 'cart' },
     { to: '/admin/clerks', label: 'Clerk management', icon: 'users' },
     { to: '/admin/alerts', label: 'Alerts', icon: 'alert' },
+    { to: '/shop', label: 'Storefront', icon: 'cart' },
   ],
   merchant: [
     { to: '/merchant', label: 'Overview', icon: 'grid' },
     { to: '/merchant/admins', label: 'Admins', icon: 'users' },
     { to: '/merchant/analytics', label: 'Store analytics', icon: 'chart' },
+    { to: '/shop', label: 'Storefront', icon: 'cart' },
   ],
 }
 
@@ -43,7 +46,8 @@ function Icon({ name }) {
 }
 
 export default function Sidebar({ role, open, onClose, user, onLogout }) {
-  const links = NAV_BY_ROLE[role] || []
+  const currentRole = String(role || 'merchant').toLowerCase().trim()
+  const links = NAV_BY_ROLE[currentRole] || NAV_BY_ROLE.merchant
   const availableRoles = Object.keys(NAV_BY_ROLE)
 
   return (
