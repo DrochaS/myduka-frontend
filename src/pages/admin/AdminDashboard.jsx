@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Loader from '../../components/common/Loader'
@@ -21,8 +21,13 @@ const FALLBACK = {
 }
 
 // TODO: replace all mock data below with a real /admin/overview endpoint.
-const NOTIFICATION_COUNT = 3
 const BRANCH = 'Nairobi CBD Branch'
+
+const NOTIFICATIONS = [
+  { id: 1, tone: 'danger', title: 'Out of stock: Cooking Oil 2L', time: '10 min ago' },
+  { id: 2, tone: 'warning', title: 'Low stock: Tusker Lager 500ml', time: '38 min ago' },
+  { id: 3, tone: 'danger', title: 'Payment declined · Order #4420', time: '12 min ago' },
+]
 
 const STATS = [
   { key: 'sales', label: 'Sales today', value: 'KSh 84,200', hint: '+9% vs yesterday', tone: 'success', icon: 'cart' },
@@ -73,6 +78,61 @@ function BellIcon() {
   )
 }
 
+function NotificationsBell() {
+  const [open, setOpen] = useState(false)
+  const [notifications, setNotifications] = useState(NOTIFICATIONS)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  return (
+    <div className="notif" ref={ref}>
+      <button
+        className="notif-bell"
+        aria-label={`${notifications.length} unread notifications`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <BellIcon />
+        {notifications.length > 0 && <span className="notif-bell__badge">{notifications.length}</span>}
+      </button>
+
+      {open && (
+        <div className="notif-panel">
+          <div className="notif-panel__header">
+            <p className="notif-panel__title">Notifications</p>
+            {notifications.length > 0 && (
+              <button className="notif-panel__clear" onClick={() => setNotifications([])}>
+                Mark all read
+              </button>
+            )}
+          </div>
+          {notifications.length === 0 ? (
+            <p className="notif-panel__empty">You're all caught up.</p>
+          ) : (
+            <div className="notif-panel__list">
+              {notifications.map((n) => (
+                <div className="notif-item" key={n.id}>
+                  <span className={`notif-item__dot notif-item__dot--${n.tone}`} />
+                  <div>
+                    <p className="notif-item__title">{n.title}</p>
+                    <p className="notif-item__time">{n.time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function AdminDashboard() {
   const dispatch = useDispatch()
   const { clerkPerformance, status, error } = useSelector((state) => state.analytics)
@@ -95,10 +155,7 @@ export default function AdminDashboard() {
           <p>{BRANCH} · {today}</p>
         </div>
         <div className="page__actions">
-          <button className="notif-bell" aria-label={`${NOTIFICATION_COUNT} unread notifications`}>
-            <BellIcon />
-            {NOTIFICATION_COUNT > 0 && <span className="notif-bell__badge">{NOTIFICATION_COUNT}</span>}
-          </button>
+          <NotificationsBell />
           <Link to="/admin/supply-requests">
             <Button variant="secondary">Supply requests</Button>
           </Link>
