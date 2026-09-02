@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   fetchStorefrontProducts,
   addToCart,
@@ -9,6 +9,7 @@ import {
 } from '../../redux/slices/storefrontSlice'
 import { formatCurrency } from '../../utils/formatters'
 import Loader from '../../components/common/Loader'
+import { useAuth } from '../../hooks/useAuth'
 import './Storefront.css'
 
 const DEFAULT_STORE_ID = 1
@@ -16,6 +17,7 @@ const DEFAULT_STORE_ID = 1
 export default function Storefront() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { isAuthenticated, role, user } = useAuth()
   const { products, productsStatus, productsError, cartItems } = useSelector(
     (state) => state.storefront,
   )
@@ -47,7 +49,9 @@ export default function Storefront() {
   return (
     <div className="storefront">
       <header className="storefront__nav">
-        <span className="storefront__logo">MyDuka</span>
+        <Link to="/shop" className="storefront__logo" style={{ textDecoration: 'none', color: 'inherit' }}>
+          MyDuka
+        </Link>
         <div className="storefront__search">
           <i className="storefront__search-icon" aria-hidden="true">
             🔍
@@ -59,15 +63,47 @@ export default function Storefront() {
             onChange={(event) => setSearch(event.target.value)}
           />
         </div>
-        <button
-          type="button"
-          className="storefront__cart-button"
-          onClick={() => setCartOpen(true)}
-          aria-label={`Open cart, ${cartCount} items`}
-        >
-          Cart
-          {cartCount > 0 && <span className="storefront__cart-badge">{cartCount}</span>}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          {isAuthenticated ? (
+            <Link
+              to="/"
+              style={{
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                color: 'var(--accent, #2563eb)',
+                textDecoration: 'none',
+                padding: '0.35rem 0.65rem',
+                border: '1px solid currentColor',
+                borderRadius: '8px',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Dashboard ({role})
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              style={{
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                color: 'var(--muted, #64748b)',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Staff sign in
+            </Link>
+          )}
+          <button
+            type="button"
+            className="storefront__cart-button"
+            onClick={() => setCartOpen(true)}
+            aria-label={`Open cart, ${cartCount} items`}
+          >
+            Cart
+            {cartCount > 0 && <span className="storefront__cart-badge">{cartCount}</span>}
+          </button>
+        </div>
       </header>
 
       <div className="storefront__categories">
