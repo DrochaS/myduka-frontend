@@ -158,6 +158,7 @@ export default function MerchantDashboard() {
   const [storeMap, setStoreMap] = useState({})
   const [adminsLoading, setAdminsLoading] = useState(true)
   const [adminsError, setAdminsError] = useState(null)
+  const [pendingDeleteId, setPendingDeleteId] = useState(null)
 
   async function loadAdmins() {
     setAdminsLoading(true)
@@ -183,6 +184,24 @@ export default function MerchantDashboard() {
   useEffect(() => {
     loadAdmins()
   }, [])
+
+  async function handleRemove(admin) {
+    const label = admin.full_name || admin.email
+    // eslint-disable-next-line no-alert
+    const confirmed = window.confirm(`Remove ${label}? This cannot be undone.`)
+    if (!confirmed) return
+
+    setPendingDeleteId(admin.id)
+    try {
+      await axiosInstance.delete(`/merchant/admins/${admin.id}`)
+      setAdmins((prev) => prev.filter((a) => a.id !== admin.id))
+    } catch (err) {
+      // eslint-disable-next-line no-alert
+      alert(err.response?.data?.error || 'Failed to remove admin.')
+    } finally {
+      setPendingDeleteId(null)
+    }
+  }
 
   return (
     <div className="page merchant-page">
@@ -312,7 +331,13 @@ export default function MerchantDashboard() {
                   </td>
                   <td className="admin-table__joined">{formatDate(a.created_at)}</td>
                   <td>
-                    <button className="admin-table__remove">Remove</button>
+                    <button
+                      className="admin-table__remove"
+                      onClick={() => handleRemove(a)}
+                      disabled={pendingDeleteId === a.id}
+                    >
+                      {pendingDeleteId === a.id ? '…' : 'Remove'}
+                    </button>
                   </td>
                 </tr>
               ))}
