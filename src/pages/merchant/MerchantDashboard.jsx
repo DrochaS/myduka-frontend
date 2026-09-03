@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Line, Bar } from 'react-chartjs-2'
 import { mergeChartOptions } from '../../components/charts/charts.js'
 import Button from '../../components/common/Button'
+import InviteAdminModal from './InviteAdminModal'
 import './MerchantDashboard.css'
 
 // TODO: replace all mock data below with real /merchant/overview endpoints.
@@ -135,6 +136,7 @@ function CategorySalesChart() {
 
 export default function MerchantDashboard() {
   const [range, setRange] = useState('30D')
+  const [inviteOpen, setInviteOpen] = useState(false)
 
   return (
     <div className="page merchant-page">
@@ -223,7 +225,7 @@ export default function MerchantDashboard() {
             <h2 className="panel__title">Admin Management</h2>
             <p className="panel__subtitle">Manage admins across all branches</p>
           </div>
-          <Button>+ Invite Admin</Button>
+          <Button onClick={() => setInviteOpen(true)}>+ Invite Admin</Button>
         </div>
         <table className="admin-table">
           <thead>
@@ -278,6 +280,14 @@ export default function MerchantDashboard() {
           ))}
         </div>
       </div>
+
+      <InviteAdminModal
+        open={inviteOpen}
+        onClose={() => setInviteOpen(false)}
+        onInvited={() => {
+          // TODO: once real admin/invite list is wired up, refetch it here to reflect the pending invite.
+        }}
+      />
     </div>
   )
 }
