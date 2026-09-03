@@ -23,6 +23,9 @@ const StoreAnalytics = lazy(() => import('./pages/merchant/StoreAnalytics'))
 const Branches = lazy(() => import('./pages/merchant/Branches'))
 const AdminManagement = lazy(() => import('./pages/merchant/AdminManagement'))
 const Inventory = lazy(() => import('./pages/merchant/Inventory'))
+const Storefront = lazy(() => import('./pages/storefront/Storefront'))
+const Checkout = lazy(() => import('./pages/storefront/Checkout'))
+const OrderConfirmation = lazy(() => import('./pages/storefront/Orderconfirmation'))
 
 function RoleHome() {
   const { role, isAuthenticated } = useAuth()
