@@ -13,15 +13,16 @@ const NotFound = lazy(() => import('./pages/errors/NotFound'))
 const Unauthorized = lazy(() => import('./pages/errors/Unauthorized'))
 const ClerkDashboard = lazy(() => import('./pages/clerk/ClerkDashboard'))
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
+const StockEntries = lazy(() => import('./pages/admin/StockEntries'))
 const SupplyRequests = lazy(() => import('./pages/admin/SupplyRequests'))
 const SupplierPayments = lazy(() => import('./pages/admin/SupplierPayments'))
 const ClerkManagement = lazy(() => import('./pages/admin/ClerkManagement'))
+const Alerts = lazy(() => import('./pages/admin/Alerts'))
 const MerchantDashboard = lazy(() => import('./pages/merchant/MerchantDashboard'))
-const AdminManagement = lazy(() => import('./pages/merchant/AdminManagement'))
 const StoreAnalytics = lazy(() => import('./pages/merchant/StoreAnalytics'))
-const Storefront = lazy(() => import('./pages/storefront/Storefront'))
-const Checkout = lazy(() => import('./pages/storefront/Checkout'))
-const OrderConfirmation = lazy(() => import('./pages/storefront/Orderconfirmation'))
+const Branches = lazy(() => import('./pages/merchant/Branches'))
+const AdminManagement = lazy(() => import('./pages/merchant/AdminManagement'))
+const Inventory = lazy(() => import('./pages/merchant/Inventory'))
 
 function RoleHome() {
   const { role, isAuthenticated } = useAuth()
@@ -62,18 +63,22 @@ export default function App() {
 
               <Route element={<ProtectedRoute roles={['admin']} />}>
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/stock-entries" element={<StockEntries />} />
                 <Route path="/admin/supply-requests" element={<SupplyRequests />} />
                 <Route
                   path="/admin/supplier-payments"
                   element={<SupplierPayments />}
                 />
                 <Route path="/admin/clerks" element={<ClerkManagement />} />
+                <Route path="/admin/alerts" element={<Alerts />} />
               </Route>
 
               <Route element={<ProtectedRoute roles={['merchant']} />}>
                 <Route path="/merchant" element={<MerchantDashboard />} />
-                <Route path="/merchant/admins" element={<AdminManagement />} />
                 <Route path="/merchant/analytics" element={<StoreAnalytics />} />
+                <Route path="/merchant/branches" element={<Branches />} />
+                <Route path="/merchant/admins" element={<AdminManagement />} />
+                <Route path="/merchant/inventory" element={<Inventory />} />
               </Route>
             </Route>
           </Route>
