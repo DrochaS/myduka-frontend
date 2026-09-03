@@ -46,6 +46,12 @@ export default function App() {
           <Route path="/signup" element={<Register />} />
           <Route path="/accept-invite" element={<AcceptInvite />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/shop" element={<Storefront />} />
+          <Route path="/storefront" element={<Storefront />} />
+          <Route path="/shop/checkout" element={<Checkout />} />
+          <Route path="/storefront/checkout" element={<Checkout />} />
+          <Route path="/shop/order/:orderId" element={<OrderConfirmation />} />
+          <Route path="/storefront/order/:orderId" element={<OrderConfirmation />} />
 
           <Route element={<ProtectedRoute />}>
             <Route element={<PageWrapper />}>
