@@ -1,0 +1,33 @@
+PERSON 1
+Focus: UI kit, login, tests helpers, supply-request Redux
+
+MAIN COMMIT MESSAGE:
+  feat: add shared UI pieces, login page, chart tests, and request slice
+
+Branches:
+  FE: feat/person1-ui-tests
+  BE: feat/person1-test-fixtures
+
+See COMMITS.txt for per-file commit messages.
+
+Exact files:
+  [backend] .env.example  (14 lines)
+  [backend] tests/conftest.py  (110 lines)
+  [frontend] src/App.css  (12 lines)
+  [frontend] src/__tests__/components/Table.test.jsx  (41 lines)
+  [frontend] src/__tests__/components/charts.test.js  (60 lines)
+  [frontend] src/__tests__/redux/authSlice.test.js  (68 lines)
+  [frontend] src/components/charts/index.js  (8 lines)
+  [frontend] src/components/common/Button.css  (51 lines)
+  [frontend] src/components/common/Input.css  (31 lines)
+  [frontend] src/components/common/Modal.jsx  (37 lines)
+  [frontend] src/components/common/Pagination.jsx  (28 lines)
+  [frontend] src/components/common/Table.jsx  (34 lines)
+  [frontend] src/components/layout/Sidebar.css  (62 lines)
+  [frontend] src/components/layout/Sidebar.jsx  (51 lines)
+  [frontend] src/hooks/usePagination.js  (24 lines)
+  [frontend] src/pages/auth/Login.jsx  (85 lines)
+  [frontend] src/pages/clerk/ClerkDashboard.css  (3 lines)
+  [frontend] src/pages/errors/NotFound.jsx  (17 lines)
+  [frontend] src/pages/errors/Unauthorized.jsx  (22 lines)
+  [frontend] src/redux/slices/requestSlice.js  (79 lines)

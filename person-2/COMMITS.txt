@@ -1,0 +1,75 @@
+PERSON 2 — Auth invite UI, BarChart, role guards, Flask analytics + auth tests
+============================================================
+
+ONE COMMIT (simplest):
+  git commit -m "feat: add invite flow UI, BarChart, guards, and Flask analytics/auth tests"
+
+Suggested branches:
+  frontend: feat/person2-auth-charts
+  backend:  feat/person2-analytics-auth-tests
+
+OR one commit per file:
+
+FILE: myduka-backend/README.md
+  commit: docs(backend): document API setup
+
+FILE: myduka-backend/app/routes/analytics.py
+  commit: feat(api): add sales analytics endpoint
+
+FILE: myduka-backend/app/utils/__init__.py
+  commit: chore: init utils package
+
+FILE: myduka-backend/app/utils/decorators.py
+  commit: feat(auth): add role/jwt decorators
+
+FILE: myduka-backend/app/utils/pagination.py
+  commit: feat: add pagination helper
+
+FILE: myduka-backend/requirements.txt
+  commit: chore: pin Flask API dependencies
+
+FILE: myduka-backend/run.py
+  commit: chore: add Flask run entrypoint
+
+FILE: myduka-backend/tests/test_admin.py
+  commit: test: cover admin API flows
+
+FILE: myduka-backend/tests/test_auth.py
+  commit: test: cover login and invite auth
+
+FILE: myduka-frontend/docs/SPEC-COVERAGE.md
+  commit: docs: map MyDuka spec coverage
+
+FILE: myduka-frontend/docs/pr-reviews/myduka-inventory-fullstack.md
+  commit: docs: add fullstack PR review notes
+
+FILE: myduka-frontend/src/__tests__/auth/Login.test.jsx
+  commit: test: cover Login page
+
+FILE: myduka-frontend/src/__tests__/setup.js
+  commit: chore(test): add Vitest setup
+
+FILE: myduka-frontend/src/components/charts/BarChart.jsx
+  commit: feat(charts): add BarChart wrapper
+
+FILE: myduka-frontend/src/components/common/Badge.jsx
+  commit: feat(ui): add Badge
+
+FILE: myduka-frontend/src/components/common/Loader.css
+  commit: style: add Loader styles
+
+FILE: myduka-frontend/src/components/common/Modal.css
+  commit: style: add Modal styles
+
+FILE: myduka-frontend/src/components/common/Pagination.css
+  commit: style: add Pagination styles
+
+FILE: myduka-frontend/src/components/guards/ProtectedRoute.jsx
+  commit: feat(auth): add ProtectedRoute by role
+
+FILE: myduka-frontend/src/pages/admin/SupplierPayments.css
+  commit: style: add supplier payments styles
+
+FILE: myduka-frontend/src/pages/auth/AcceptInvite.jsx
+  commit: feat(auth): add AcceptInvite page
+

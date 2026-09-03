@@ -1,0 +1,72 @@
+PERSON 1 — UI kit, login, tests helpers, supply-request Redux
+============================================================
+
+ONE COMMIT (simplest):
+  git commit -m "feat: add shared UI pieces, login page, chart tests, and request slice"
+
+Suggested branches:
+  frontend: feat/person1-ui-tests
+  backend:  feat/person1-test-fixtures
+
+OR one commit per file:
+
+FILE: myduka-backend/.env.example
+  commit: chore(backend): document local env defaults
+
+FILE: myduka-backend/tests/conftest.py
+  commit: test(backend): add shared pytest fixtures
+
+FILE: myduka-frontend/src/App.css
+  commit: style: add app shell base styles
+
+FILE: myduka-frontend/src/__tests__/components/Table.test.jsx
+  commit: test: cover Table component rendering
+
+FILE: myduka-frontend/src/__tests__/components/charts.test.js
+  commit: test: cover chart helper options
+
+FILE: myduka-frontend/src/__tests__/redux/authSlice.test.js
+  commit: test: cover authSlice reducers
+
+FILE: myduka-frontend/src/components/charts/index.js
+  commit: feat(charts): export chart components
+
+FILE: myduka-frontend/src/components/common/Button.css
+  commit: style: add Button styles
+
+FILE: myduka-frontend/src/components/common/Input.css
+  commit: style: add Input styles
+
+FILE: myduka-frontend/src/components/common/Modal.jsx
+  commit: feat(ui): add reusable Modal
+
+FILE: myduka-frontend/src/components/common/Pagination.jsx
+  commit: feat(ui): add Pagination control
+
+FILE: myduka-frontend/src/components/common/Table.jsx
+  commit: feat(ui): add shared Table
+
+FILE: myduka-frontend/src/components/layout/Sidebar.css
+  commit: style: add Sidebar styles
+
+FILE: myduka-frontend/src/components/layout/Sidebar.jsx
+  commit: feat(layout): add role Sidebar
+
+FILE: myduka-frontend/src/hooks/usePagination.js
+  commit: feat(hooks): add usePagination
+
+FILE: myduka-frontend/src/pages/auth/Login.jsx
+  commit: feat(auth): add Login page
+
+FILE: myduka-frontend/src/pages/clerk/ClerkDashboard.css
+  commit: style: add clerk dashboard styles
+
+FILE: myduka-frontend/src/pages/errors/NotFound.jsx
+  commit: feat: add NotFound page
+
+FILE: myduka-frontend/src/pages/errors/Unauthorized.jsx
+  commit: feat: add Unauthorized page
+
+FILE: myduka-frontend/src/redux/slices/requestSlice.js
+  commit: feat(redux): add supply request slice
+

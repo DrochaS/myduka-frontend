@@ -1,0 +1,34 @@
+PERSON 2
+Focus: Auth invite UI, BarChart, role guards, Flask analytics + auth tests
+
+MAIN COMMIT MESSAGE:
+  feat: add invite flow UI, BarChart, guards, and Flask analytics/auth tests
+
+Branches:
+  FE: feat/person2-auth-charts
+  BE: feat/person2-analytics-auth-tests
+
+See COMMITS.txt for per-file commit messages.
+
+Exact files:
+  [backend] README.md  (29 lines)
+  [backend] app/routes/analytics.py  (76 lines)
+  [backend] app/utils/__init__.py  (1 lines)
+  [backend] app/utils/decorators.py  (61 lines)
+  [backend] app/utils/pagination.py  (19 lines)
+  [backend] requirements.txt  (30 lines)
+  [backend] run.py  (6 lines)
+  [backend] tests/test_admin.py  (88 lines)
+  [backend] tests/test_auth.py  (81 lines)
+  [frontend] docs/SPEC-COVERAGE.md  (47 lines)
+  [frontend] docs/pr-reviews/myduka-inventory-fullstack.md  (43 lines)
+  [frontend] src/__tests__/auth/Login.test.jsx  (55 lines)
+  [frontend] src/__tests__/setup.js  (22 lines)
+  [frontend] src/components/charts/BarChart.jsx  (53 lines)
+  [frontend] src/components/common/Badge.jsx  (13 lines)
+  [frontend] src/components/common/Loader.css  (22 lines)
+  [frontend] src/components/common/Modal.css  (40 lines)
+  [frontend] src/components/common/Pagination.css  (13 lines)
+  [frontend] src/components/guards/ProtectedRoute.jsx  (32 lines)
+  [frontend] src/pages/admin/SupplierPayments.css  (3 lines)
+  [frontend] src/pages/auth/AcceptInvite.jsx  (102 lines)
