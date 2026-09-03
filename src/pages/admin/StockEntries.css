@@ -1,0 +1,46 @@
+.entries-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.entries-table th {
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.entries-table td {
+  padding: 0.85rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.entries-table tr:last-child td {
+  border-bottom: none;
+}
+
+.entries-table__item {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.entries-table__qty--positive { color: var(--success); font-weight: 600; }
+.entries-table__qty--negative { color: var(--danger); font-weight: 600; }
+.entries-table__date { color: var(--muted); }
+
+.type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.type-badge--restock { background: rgba(21, 128, 61, 0.12); color: var(--success); }
+.type-badge--spoilt { background: rgba(185, 28, 28, 0.12); color: var(--danger); }
+.type-badge--adjustment { background: rgba(180, 83, 9, 0.12); color: var(--warning); }

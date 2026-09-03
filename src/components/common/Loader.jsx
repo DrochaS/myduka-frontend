@@ -1,10 +1,12 @@
 import './Loader.css'
 
-export default function Loader({ label = 'Loading…' }) {
+export default function Loader({ label = 'Loading…', size = 'medium', inline = false }) {
+  const className = `loader loader--${size}${inline ? ' loader--inline' : ''}`
+  
   return (
-    <div className="loader" role="status" aria-live="polite">
+    <div className={className.trim()} role="status" aria-live="polite">
       <span className="loader__spinner" aria-hidden="true" />
-      <span>{label}</span>
+      {label && <span>{label}</span>}
     </div>
   )
 }

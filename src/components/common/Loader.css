@@ -6,13 +6,38 @@
   padding: 1rem 0;
 }
 
-.loader__spinner {
+.loader--small .loader__spinner {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-width: 2px;
+}
+
+.loader--medium .loader__spinner {
   width: 1.1rem;
   height: 1.1rem;
+  border-width: 2px;
+}
+
+.loader--large .loader__spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-width: 3px;
+}
+
+.loader__spinner {
   border-radius: 50%;
   border: 2px solid var(--border);
   border-top-color: var(--accent);
   animation: spin 0.7s linear infinite;
+}
+
+.loader--inline {
+  padding: 0;
+  display: inline-flex;
+}
+
+.loader--inline .loader__spinner {
+  margin-right: 0.5rem;
 }
 
 @keyframes spin {
