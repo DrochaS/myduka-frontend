@@ -98,14 +98,14 @@ function ActionButtons({ order, onContinueShopping, onViewOrder }) {
 }
 
 export default function OrderConfirmation() {
-  const { id } = useParams()
+  const { orderId } = useParams()
   const location = useLocation()
   const navigate = useNavigate()
   const lastOrder = useSelector((state) => state.storefront.lastOrder)
 
   const order = location.state?.order || lastOrder
 
-  if (!order || String(order.id) !== String(id)) {
+  if (!order || String(order.id) !== String(orderId)) {
     return (
       <div className="confirmation confirmation--error">
         <div className="confirmation__error-icon">❌</div>
