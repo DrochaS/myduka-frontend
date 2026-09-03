@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Line, Bar } from 'react-chartjs-2'
 import { mergeChartOptions } from '../../components/charts/charts.js'
+import axiosInstance from '../../utils/axiosInstance'
 import Button from '../../components/common/Button'
 import InviteAdminModal from './InviteAdminModal'
 import './MerchantDashboard.css'
 
-// TODO: replace all mock data below with real /merchant/overview endpoints.
+// TODO: replace remaining mock data below (STATS, revenue/category charts, top products,
+// supplier payments) with real /merchant endpoints once they exist.
 const RANGES = ['7D', '30D', '90D', '1Y']
 
 const STATS = [
@@ -33,13 +35,6 @@ const TOP_PRODUCTS = [
   { rank: 5, name: 'Pringles Original 165g', revenue: 'KSh 71K', units: '590 units', change: '+8%', up: true },
 ]
 
-const ADMINS = [
-  { id: 1, name: 'Amara Osei', email: 'amara@myduka.co', branch: 'Nairobi CBD', status: 'active', joined: '2024-03-12' },
-  { id: 2, name: 'Faith Wanjiku', email: 'faith@myduka.co', branch: 'Westlands', status: 'active', joined: '2024-05-01' },
-  { id: 3, name: 'Denis Mutua', email: 'denis@myduka.co', branch: 'Mombasa Rd', status: 'active', joined: '2024-06-15' },
-  { id: 4, name: 'Lydia Chebet', email: 'lydia@myduka.co', branch: 'Nairobi CBD', status: 'pending', joined: '2024-09-01' },
-]
-
 const SUPPLIER_PAYMENTS = [
   { id: 1, name: 'East African Breweries', amount: 'KSh 284K', due: '2026-09-10', status: 'pending' },
   { id: 2, name: 'Pembe Flour Mills', amount: 'KSh 126K', due: '2026-09-05', status: 'overdue' },
@@ -47,7 +42,13 @@ const SUPPLIER_PAYMENTS = [
   { id: 4, name: 'P&G Kenya', amount: 'KSh 211K', due: '2026-09-20', status: 'pending' },
 ]
 
-const STATUS_LABEL = { active: 'Active', pending: 'Pending', overdue: 'Overdue', paid: 'Paid' }
+const STATUS_LABEL = {
+  active: 'Active',
+  inactive: 'Inactive',
+  pending: 'Pending',
+  overdue: 'Overdue',
+  paid: 'Paid',
+}
 
 function StatIcon({ name }) {
   const paths = {
@@ -81,7 +82,7 @@ function BranchRevenueChart() {
 
   const options = mergeChartOptions({
     plugins: {
-      legend: { display: false }, // custom legend rendered above the chart
+      legend: { display: false },
     },
     scales: {
       y: {
@@ -134,9 +135,54 @@ function CategorySalesChart() {
   )
 }
 
+function initials(nameOrEmail) {
+  const base = (nameOrEmail || '').trim()
+  if (!base) return '?'
+  const parts = base.split(' ').filter(Boolean)
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase()
+  return base.slice(0, 2).toUpperCase()
+}
+
+function formatDate(iso) {
+  if (!iso) return '—'
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return '—'
+  return d.toISOString().slice(0, 10)
+}
+
 export default function MerchantDashboard() {
   const [range, setRange] = useState('30D')
   const [inviteOpen, setInviteOpen] = useState(false)
+
+  const [admins, setAdmins] = useState([])
+  const [storeMap, setStoreMap] = useState({})
+  const [adminsLoading, setAdminsLoading] = useState(true)
+  const [adminsError, setAdminsError] = useState(null)
+
+  async function loadAdmins() {
+    setAdminsLoading(true)
+    setAdminsError(null)
+    try {
+      const [adminsRes, storesRes] = await Promise.all([
+        axiosInstance.get('/merchant/admins'),
+        axiosInstance.get('/merchant/stores'),
+      ])
+      const map = {}
+      for (const s of storesRes.data || []) {
+        map[s.id] = s.name
+      }
+      setStoreMap(map)
+      setAdmins(adminsRes.data || [])
+    } catch (err) {
+      setAdminsError(err.response?.data?.error || 'Failed to load admins.')
+    } finally {
+      setAdminsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadAdmins()
+  }, [])
 
   return (
     <div className="page merchant-page">
@@ -227,39 +273,52 @@ export default function MerchantDashboard() {
           </div>
           <Button onClick={() => setInviteOpen(true)}>+ Invite Admin</Button>
         </div>
-        <table className="admin-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Branch</th>
-              <th>Status</th>
-              <th>Joined</th>
-              <th aria-hidden="true"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {ADMINS.map((a) => (
-              <tr key={a.id}>
-                <td>
-                  <div className="admin-table__name">
-                    <span className="admin-table__avatar">{a.name.split(' ').map((n) => n[0]).join('')}</span>
-                    {a.name}
-                  </div>
-                </td>
-                <td className="admin-table__email">{a.email}</td>
-                <td>{a.branch}</td>
-                <td>
-                  <span className={`status-badge status-badge--${a.status}`}>{STATUS_LABEL[a.status]}</span>
-                </td>
-                <td className="admin-table__joined">{a.joined}</td>
-                <td>
-                  <button className="admin-table__remove">Remove</button>
-                </td>
+
+        {adminsError && <div className="error-banner">{adminsError}</div>}
+
+        {adminsLoading ? (
+          <p className="admin-table__loading">Loading admins…</p>
+        ) : admins.length === 0 ? (
+          <p className="admin-table__loading">No admins yet. Invite one to get started.</p>
+        ) : (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Branch</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th aria-hidden="true"></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {admins.map((a) => (
+                <tr key={a.id}>
+                  <td>
+                    <div className="admin-table__name">
+                      <span className="admin-table__avatar">
+                        {initials(a.full_name || a.email)}
+                      </span>
+                      {a.full_name || a.username || a.email}
+                    </div>
+                  </td>
+                  <td className="admin-table__email">{a.email}</td>
+                  <td>{a.store_id ? storeMap[a.store_id] || `Store #${a.store_id}` : '—'}</td>
+                  <td>
+                    <span className={`status-badge status-badge--${a.is_active ? 'active' : 'inactive'}`}>
+                      {a.is_active ? STATUS_LABEL.active : STATUS_LABEL.inactive}
+                    </span>
+                  </td>
+                  <td className="admin-table__joined">{formatDate(a.created_at)}</td>
+                  <td>
+                    <button className="admin-table__remove">Remove</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       <div className="panel">
@@ -284,9 +343,7 @@ export default function MerchantDashboard() {
       <InviteAdminModal
         open={inviteOpen}
         onClose={() => setInviteOpen(false)}
-        onInvited={() => {
-          // TODO: once real admin/invite list is wired up, refetch it here to reflect the pending invite.
-        }}
+        onInvited={loadAdmins}
       />
     </div>
   )
