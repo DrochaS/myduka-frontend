@@ -23,7 +23,7 @@ function OrderSummary({ order }) {
     <div className="confirmation__summary">
       <h3 className="confirmation__summary-title">Order Summary</h3>
       <div className="confirmation__items">
-        {order.items.map((item) => (
+        {(order.items || []).map((item) => (
           <ConfirmationItem key={item.id} item={item} />
         ))}
       </div>

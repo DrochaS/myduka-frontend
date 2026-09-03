@@ -186,8 +186,11 @@ export default function Storefront() {
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase()) ||
-                           product.category.toLowerCase().includes(search.toLowerCase())
+      const productName = product.name || ''
+      const productCategory = product.category || ''
+      const normalizedSearch = search.toLowerCase()
+      const matchesSearch = productName.toLowerCase().includes(normalizedSearch) ||
+                           productCategory.toLowerCase().includes(normalizedSearch)
       const matchesCategory = category === 'all' || product.category === category
       return matchesSearch && matchesCategory
     })
