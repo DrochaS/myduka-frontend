@@ -1,16 +1,29 @@
-# React + Vite
+# MyDuka Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + Vite frontend for MyDuka, an inventory management system with merchant, admin, and clerk roles.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19, React Router, Redux Toolkit
+- Chart.js / react-chartjs-2 for analytics dashboards
+- Axios for API calls
+- Vitest + Testing Library for tests
 
-## React Compiler
+## Quick start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+## Scripts
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- `npm run dev` — start dev server
+- `npm run build` — production build
+- `npm run test` — run tests
+- `npm run lint` — lint with oxlint
+
+## Backend
+
+Talks to the [MyDuka Flask API](https://github.com/DrochaS/myduka-backend). Set `VITE_API_URL` in `.env` to point at it.

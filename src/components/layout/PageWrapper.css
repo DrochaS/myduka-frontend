@@ -93,6 +93,24 @@
   padding: 0.7rem 0.85rem;
 }
 
+.auth-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+.auth-footer a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+
 @media (max-width: 900px) {
   .chart-grid {
     grid-template-columns: 1fr;

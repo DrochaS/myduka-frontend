@@ -14,7 +14,11 @@ export const fetchClerkPerformance = createAsyncThunk(
   'analytics/fetchClerkPerformance',
   async (_, { rejectWithValue }) => {
     try {
-      return await apiGet('/admin/clerk-performance')
+      const data = await apiGet('/admin/reports/clerk-performance')
+      return {
+        trend: data.entriesByClerk,
+        byClerk: data.spoiltByClerk,
+      }
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Failed to load clerk performance'))
     }
@@ -25,7 +29,21 @@ export const fetchStoreAnalytics = createAsyncThunk(
   'analytics/fetchStoreAnalytics',
   async (_, { rejectWithValue }) => {
     try {
-      return await apiGet('/merchant/analytics')
+      const [storeReport, productReport] = await Promise.all([
+        apiGet('/merchant/reports/stores'),
+        apiGet('/merchant/reports/products'),
+      ])
+      const payments = storeReport.paidUnpaidByStore
+      return {
+        byStore: {
+          labels: payments.labels,
+          values: payments.paid.map(
+            (amount, index) => amount + payments.unpaid[index],
+          ),
+          label: 'Supplier payments',
+        },
+        byProduct: productReport.stockByProduct,
+      }
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Failed to load store analytics'))
     }

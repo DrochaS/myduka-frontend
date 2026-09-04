@@ -24,3 +24,9 @@ export function formatStatus(status) {
     .replace(/_/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase())
 }
+
+export function formatQuantity(value) {
+  const num = Number(value)
+  if (Number.isNaN(num)) return '0'
+  return new Intl.NumberFormat('en-KE').format(num)
+}

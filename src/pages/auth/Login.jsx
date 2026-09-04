@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import Input from '../../components/common/Input'
 import Button from '../../components/common/Button'
 import {
@@ -16,6 +16,8 @@ import '../../components/layout/PageWrapper.css'
 export default function Login() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const justRegistered = searchParams.get('registered') === 'true'
   const { status, error } = useSelector(selectAuth)
   const isAuthenticated = useSelector(selectIsAuthenticated)
   const [form, setForm] = useState({ email: '', password: '' })
@@ -57,6 +59,20 @@ export default function Login() {
           <h1>Sign in</h1>
           <p>Access your store inventory workspace.</p>
         </div>
+        {justRegistered ? (
+          <div
+            style={{
+              background: 'rgba(34, 197, 94, 0.1)',
+              color: '#16a34a',
+              border: '1px solid rgba(34, 197, 94, 0.3)',
+              borderRadius: '8px',
+              padding: '0.7rem 0.85rem',
+              fontSize: '0.9rem',
+            }}
+          >
+            Account created successfully! Please sign in with your credentials.
+          </div>
+        ) : null}
         {error ? <div className="error-banner">{error}</div> : null}
         <Input
           label="Email"
@@ -79,7 +95,11 @@ export default function Login() {
         <Button type="submit" loading={status === 'loading'}>
           Sign in
         </Button>
+        <div className="auth-footer">
+          Don't have an account? <Link to="/register">Create an account</Link>
+        </div>
       </form>
     </div>
   )
 }
+

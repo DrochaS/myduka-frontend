@@ -1,0 +1,51 @@
+.branches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.branch-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.branch-card__name {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-h);
+  font-size: 1.05rem;
+}
+
+.branch-card__address {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.branch-card__stats {
+  display: flex;
+  gap: 1.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+}
+
+.branch-card__stat-value {
+  margin: 0 0 0.15rem;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.branch-card__stat-label {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.branches-page__loading {
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+  margin: 0;
+}

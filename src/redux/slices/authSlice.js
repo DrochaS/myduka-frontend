@@ -46,9 +46,12 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const data = await apiPost('/auth/login', credentials)
-      storageSet('token', data.token)
-      storageSet('user', JSON.stringify(data.user))
-      return data
+      const token = data.access_token || data.token
+      if (token && data.user) {
+        storageSet('token', token)
+        storageSet('user', JSON.stringify(data.user))
+      }
+      return { ...data, token }
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Login failed'))
     }
@@ -60,13 +63,31 @@ export const acceptInvite = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const data = await apiPost('/auth/accept-invite', payload)
-      if (data.token && data.user) {
-        storageSet('token', data.token)
+      const token = data.access_token || data.token
+      if (token && data.user) {
+        storageSet('token', token)
         storageSet('user', JSON.stringify(data.user))
       }
-      return data
+      return { ...data, token }
     } catch (error) {
       return rejectWithValue(getErrorMessage(error, 'Invite acceptance failed'))
+    }
+  },
+)
+
+export const register = createAsyncThunk(
+  'auth/register',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const data = await apiPost('/auth/register', formData)
+      const token = data.access_token || data.token
+      if (token && data.user) {
+        storageSet('token', token)
+        storageSet('user', JSON.stringify(data.user))
+      }
+      return { ...data, token }
+    } catch (error) {
+      return rejectWithValue(getErrorMessage(error, 'Registration failed'))
     }
   },
 )
@@ -94,9 +115,10 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(login.fulfilled, (state, action) => {
+        const token = action.payload.access_token || action.payload.token
         state.status = 'succeeded'
         state.user = action.payload.user
-        state.token = action.payload.token
+        state.token = token
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed'
@@ -107,11 +129,26 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(acceptInvite.fulfilled, (state, action) => {
+        const token = action.payload.access_token || action.payload.token
         state.status = 'succeeded'
         if (action.payload.user) state.user = action.payload.user
-        if (action.payload.token) state.token = action.payload.token
+        if (token) state.token = token
       })
       .addCase(acceptInvite.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.payload
+      })
+      .addCase(register.pending, (state) => {
+        state.status = 'loading'
+        state.error = null
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        const token = action.payload.access_token || action.payload.token
+        state.status = 'succeeded'
+        if (action.payload.user) state.user = action.payload.user
+        if (token) state.token = token
+      })
+      .addCase(register.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.payload
       })

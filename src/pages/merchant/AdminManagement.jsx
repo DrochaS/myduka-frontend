@@ -16,6 +16,7 @@ import {
 import { usePagination } from '../../hooks/usePagination'
 import { isValidEmail } from '../../utils/validators'
 import { formatDate } from '../../utils/formatters'
+import './AdminManagement.css'
 
 export default function AdminManagement() {
   const dispatch = useDispatch()
@@ -90,7 +91,7 @@ export default function AdminManagement() {
   ]
 
   return (
-    <div className="page">
+    <div className="page admin-management-page">
       <div className="page__header">
         <div>
           <h1>Admin management</h1>

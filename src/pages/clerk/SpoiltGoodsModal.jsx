@@ -15,7 +15,7 @@ export default function SpoiltGoodsModal({ open, onClose, entry }) {
 
   useEffect(() => {
     if (open && entry) {
-      setSpoiltQuantity(String(entry.spoiltQuantity || ''))
+      setSpoiltQuantity('')
       setReason('')
       setError(null)
     }
@@ -38,7 +38,6 @@ export default function SpoiltGoodsModal({ open, onClose, entry }) {
       reportSpoiltGoods({
         stockEntryId: entry.id,
         spoiltQuantity: Number(spoiltQuantity),
-        reason,
       }),
     )
     setSubmitting(false)
