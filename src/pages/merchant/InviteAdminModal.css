@@ -1,0 +1,107 @@
+.invite-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.invite-modal {
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+}
+
+.invite-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.invite-modal__header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.invite-modal__close {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.invite-modal__close:hover {
+  color: var(--text-h);
+}
+
+.invite-modal__form {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.invite-modal__field {
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.invite-modal__field input,
+.invite-modal__field select {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg-elevated);
+}
+
+.invite-modal__field input:focus,
+.invite-modal__field select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.invite-modal__error {
+  background: rgba(185, 28, 28, 0.08);
+  color: var(--danger);
+  border: 1px solid rgba(185, 28, 28, 0.25);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+.invite-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.invite-modal__success {
+  padding: 1.5rem;
+}
+
+.invite-modal__success-title {
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.invite-modal__success-hint {
+  margin: 0 0 1.25rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}

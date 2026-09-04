@@ -206,6 +206,13 @@
   border-bottom: none;
 }
 
+.admin-table__loading {
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+  margin: 0;
+}
+
 .admin-table__name {
   display: flex;
   align-items: center;
