@@ -8,6 +8,7 @@ export default function AddSkuModal({ open, onClose, onCreated }) {
   const [category, setCategory] = useState('')
   const [sku, setSku] = useState('')
   const [storeId, setStoreId] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
   const [buyPrice, setBuyPrice] = useState('')
   const [sellPrice, setSellPrice] = useState('')
   const [quantity, setQuantity] = useState('')
@@ -22,6 +23,7 @@ export default function AddSkuModal({ open, onClose, onCreated }) {
     setCategory('')
     setSku('')
     setStoreId('')
+    setImageUrl('')
     setBuyPrice('')
     setSellPrice('')
     setQuantity('')
@@ -46,6 +48,7 @@ export default function AddSkuModal({ open, onClose, onCreated }) {
         name: name.trim(),
         category: category.trim() || undefined,
         sku: sku.trim() || undefined,
+        image_url: imageUrl.trim() || undefined,
         store_id: Number(storeId),
         buy_price: buyPrice ? Number(buyPrice) : undefined,
         sell_price: sellPrice ? Number(sellPrice) : undefined,
@@ -106,6 +109,25 @@ export default function AddSkuModal({ open, onClose, onCreated }) {
                 </option>
               ))}
             </select>
+          </label>
+
+          <label className="sku-modal__field">
+            <span>Image URL</span>
+            <input
+              type="url"
+              value={imageUrl}
+              onChange={(e) => setImageUrl(e.target.value)}
+              placeholder="https://example.com/product.jpg"
+            />
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt="Preview"
+                className="sku-modal__image-preview"
+                onError={(e) => { e.currentTarget.style.display = 'none' }}
+                onLoad={(e) => { e.currentTarget.style.display = 'block' }}
+              />
+            )}
           </label>
 
           <div className="sku-modal__row">
